@@ -10,10 +10,6 @@ Object::Object(ObjectType type)
 	m_program = new GLuint();
 	m_mesh = std::pair<GLuint, int>(0, 0);
 
-	m_pos = new glm::vec3(0.0f, 0.0f, 0.0f);
-	m_rot = new float(0.0f);
-	m_scale = new glm::vec3(50.0f, 50.0f, 0.0f);
-
 	m_mvp = new glm::mat4;
 
 	m_objType = type;
@@ -23,6 +19,11 @@ Object::Object(ObjectType type)
 	{
 		m_program = new GLuint(Shader::CreateProgram(m_vertexKanye, m_fragmentKanye));
 		m_mesh = m_meshKanye;
+
+		// set positional data for camera
+		m_pos = &m_posKanye;
+		m_rot = &m_rotationDegreesKanye;
+		m_scale = &m_scaleKanye;
 		break;
 	}
 	default:

@@ -6,6 +6,9 @@
 // Dependencies
 #include <glew.h>
 #include <glfw3.h>
+#include <glm.hpp>
+#include <gtc/matrix_transform.hpp>
+#include <gtc/type_ptr.hpp>
 
 // library
 #include <utility>
@@ -37,6 +40,10 @@ protected:
 	const char* m_vertexKanye = "Resources/Shaders/basic.vs";
 	const char* m_fragmentKanye = "Resources/Shaders/doubleTexture.fs";
 	std::pair<GLuint, int> m_meshKanye = MeshManager::createMesh(Shape::HEXAGON);
+
+	glm::vec3 m_posKanye = glm::vec3(-75.0f, 150.0f, 0.0f);
+	glm::vec3 m_scaleKanye = glm::vec3(150.0f, 150.0f, 0.0f);
+	float m_rotationDegreesKanye = 0.0f;
 
 	void passUniformDataKanye(GLuint* program)
 	{

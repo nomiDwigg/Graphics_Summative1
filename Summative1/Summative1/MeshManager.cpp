@@ -39,12 +39,12 @@ MeshManager::m_quadIndices[6] = {
 GLfloat
 MeshManager::m_hexVertices[48] = {
 	// index        // position             // colour          // texture
-	/* 0 */     -0.5f,   1.0f,  0.0f,    1.0f, 0.0f, 0.0f,     0.33f, 1.0f,   // top - left
-	/* 1 */     -1.0f,   0.0f,  0.0f,    1.0f, 0.0f, 0.0f,     0.0f,  0.5f,   // middle - left
-	/* 2 */     -0.5f,  -1.0f,  0.0f,    1.0f, 0.0f, 0.0f,     0.33f, 0.0f,   // bottom - left
-	/* 3 */      0.5f,  -1.0f,  0.0f,    1.0f, 0.0f, 0.0f,     0.66f, 0.0f,   // bottom - right
-	/* 4 */      1.0f,   0.0f,  0.0f,    1.0f, 0.0f, 0.0f,     1.0f,  0.5f,   // middle - right
-	/* 5 */      0.5f,   1.0f,  0.0f,    1.0f, 0.0f, 0.0f,     0.66f, 1.0f    // top - right
+	/* 0 */     -0.5f,   1.0f,  0.0f,    1.0f, 0.0f, 0.0f,     0.2f, 1.0f,   // top - left
+	/* 1 */     -1.0f,   0.0f,  0.0f,    1.0f, 0.0f, 0.0f,     0.0f, 0.5f,   // middle - left
+	/* 2 */     -0.5f,  -1.0f,  0.0f,    1.0f, 0.0f, 0.0f,     0.2f, 0.0f,   // bottom - left
+	/* 3 */      0.5f,  -1.0f,  0.0f,    1.0f, 0.0f, 0.0f,     0.8f, 0.0f,   // bottom - right
+	/* 4 */      1.0f,   0.0f,  0.0f,    1.0f, 0.0f, 0.0f,     1.0f, 0.5f,   // middle - right
+	/* 5 */      0.5f,   1.0f,  0.0f,    1.0f, 0.0f, 0.0f,     0.8f, 1.0f    // top - right
 };
 GLuint
 MeshManager::m_hexIndices[12] = {
