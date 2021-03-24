@@ -26,6 +26,17 @@ Object::Object(ObjectType type)
 		m_scale = &m_scaleKanye;
 		break;
 	}
+	case ObjectType::VENERGY:
+	{
+		m_program = new GLuint(Shader::CreateProgram(m_vertexV, m_fragmentV));
+		m_mesh = m_meshV;
+
+		// set positional data for camera
+		m_pos = &m_posV;
+		m_rot = &m_rotationV;
+		m_scale = &m_scaleV;
+		break;
+	}
 	default:
 		break;
 	}
@@ -50,6 +61,7 @@ Object::render()
 	switch (m_objType)
 	{
 	case ObjectType::KANYE: { passUniformDataKanye(m_program); break; }
+	case ObjectType::VENERGY: { passUniformDataV(m_program); break; }
 	default: break;
 	}
 	glDrawElements(GL_TRIANGLES, std::get<1>(m_mesh), GL_UNSIGNED_INT, 0);
@@ -63,6 +75,7 @@ Object::update()
 	switch (m_objType)
 	{
 	case ObjectType::KANYE: {Kanye::update(); break; }
+	case ObjectType::VENERGY: {VEnergy::update(); break; }
 	default: break;
 	}
 

@@ -167,6 +167,7 @@
   <ItemGroup>
     <None Include="Resources\Shaders\basic.vs" />
     <None Include="Resources\Shaders\doubleTexture.fs" />
+    <None Include="Resources\Shaders\basic.fs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

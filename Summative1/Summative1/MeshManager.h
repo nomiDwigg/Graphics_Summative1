@@ -24,7 +24,7 @@ public:
 	~MeshManager(void);
 
 	static std::pair<GLuint, int> createMesh(Shape shape);
-
+	//static void editMesh()
 private:
 
 	static std::map<Shape, std::pair<GLuint, int>> m_createdMeshes;

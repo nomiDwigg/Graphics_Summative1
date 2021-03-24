@@ -18,10 +18,11 @@
 // custom variables
 enum class ObjectType
 {
-	KANYE = 0
+	KANYE = 0,
+	VENERGY = 1
 };
 
-class Object : public Kanye
+class Object : public Kanye, public VEnergy
 {
 public:
 	Object(ObjectType type);

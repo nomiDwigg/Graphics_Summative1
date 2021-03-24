@@ -23,6 +23,7 @@ void
 SceneManager::initialize()
 {
 	m_sceneObjects.push_back(new Object(ObjectType::KANYE));
+	m_sceneObjects.push_back(new Object(ObjectType::VENERGY));
 }
 
 void
