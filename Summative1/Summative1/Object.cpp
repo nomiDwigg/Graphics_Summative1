@@ -1,5 +1,6 @@
 // local
 #include "Shader.h"
+#include "Camera.h"
 
 // this
 #include "Object.h"
@@ -8,6 +9,12 @@ Object::Object(ObjectType type)
 {
 	m_program = new GLuint();
 	m_mesh = std::pair<GLuint, int>(0, 0);
+
+	m_pos = new glm::vec3(0.0f, 0.0f, 0.0f);
+	m_rot = new float(0.0f);
+	m_scale = new glm::vec3(50.0f, 50.0f, 0.0f);
+
+	m_mvp = new glm::mat4;
 
 	m_objType = type;
 	switch (type)
@@ -35,6 +42,9 @@ Object::render()
 	glUseProgram(*m_program);
 	glBindVertexArray(std::get<0>(m_mesh));
 
+	// send MVP to vertex
+	Utility::createUniforms("MVP", *m_mvp, m_program);
+
 	// send variables to fragment shaders
 	switch (m_objType)
 	{
@@ -54,4 +64,16 @@ Object::update()
 	case ObjectType::KANYE: {Kanye::update(); break; }
 	default: break;
 	}
+
+	calculateMVP();
+}
+
+void 
+Object::calculateMVP()
+{
+	glm::mat4 trans = glm::translate(glm::mat4(), *m_pos);
+	glm::mat4 rotate = glm::rotate(glm::mat4(), glm::radians(*m_rot), glm::vec3(0.0f, 0.0f, 1.0f));
+	glm::mat4 scale = glm::scale(glm::mat4(), *m_scale);
+
+	*m_mvp = *Camera::getProjectionMatrix() * *Camera::getViewMatrix() * trans * rotate * scale;
 }

@@ -3,6 +3,9 @@
 #include <glfw3.h>
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
+#include <glm.hpp>
+#include <gtc/matrix_transform.hpp>
+#include <gtc/type_ptr.hpp>
 
 //Library Includes
 #include <iostream>
@@ -11,6 +14,7 @@
 #include "Shader.h"
 #include "Utility.h"
 #include "SceneManager.h"
+#include "Camera.h"
 
 // functions
 void initialSetup();
@@ -19,7 +23,7 @@ void render();
 
 // global variables
 GLFWwindow* windowMain = nullptr;
-int windWidth = 800;
+int windWidth = 1200;
 int windHeight = 800;
 //GLuint fixedTriangleProgram;
 SceneManager manager;
@@ -98,6 +102,9 @@ void initialSetup()
 
 	// setup time stuff
 	Utility::m_prevTime = static_cast<float>(glfwGetTime());
+
+	// set up camera stuff
+	Camera::initialise(static_cast<float>(windWidth), static_cast<float>(windHeight));
 
 	stbi_set_flip_vertically_on_load(true);
 

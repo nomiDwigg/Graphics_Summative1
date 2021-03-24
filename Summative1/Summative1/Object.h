@@ -6,6 +6,9 @@
 // dependencies
 #include <glew.h>
 #include <glfw3.h>
+#include <glm.hpp>
+#include <gtc/matrix_transform.hpp>
+#include <gtc/type_ptr.hpp>
 
 // library
 // local
@@ -27,12 +30,19 @@ public:
 	void render();
 	void update();
 
-protected:
+	glm::vec3* m_pos;
+	float* m_rot;
+	glm::vec3* m_scale;
+
+private:
 	GLuint* m_program;
 	std::pair<GLuint, int> m_mesh;  // VAO, IndicesNum
 
-private:
 	ObjectType m_objType;
+
+	void calculateMVP();
+
+	glm::mat4* m_mvp;
 };
 
 #endif   // __OBJECT_H__

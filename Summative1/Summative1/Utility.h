@@ -6,6 +6,9 @@
 //dependencies
 #include <glew.h>
 #include <glfw3.h>
+#include <glm.hpp>
+#include <gtc/matrix_transform.hpp>
+#include <gtc/type_ptr.hpp>
 
 //library
 #include <iostream>
@@ -61,6 +64,10 @@ private:
 	template<> static void createUniPart<float>(GLint location, float uniValue)
 	{
 		glUniform1f(location, uniValue);
+	}
+	template<> static void createUniPart<glm::mat4>(GLint location, glm::mat4 uniValue)
+	{
+		glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(uniValue));
 	}
 
 	static float m_deltaTime;
