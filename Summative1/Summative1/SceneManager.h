@@ -24,6 +24,6 @@ public:
 	void update();
 
 private:
-	std::vector<Object*> m_sceneObjects;
+	std::vector<Object*> m_sceneObjects;  // vector of objects present in the scene
 };
 #endif   //__SCENE_MANAGER_H__

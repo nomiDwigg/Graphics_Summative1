@@ -9,6 +9,7 @@
 
 // library
 #include <map>
+#include <vector>
 
 class Texture
 {

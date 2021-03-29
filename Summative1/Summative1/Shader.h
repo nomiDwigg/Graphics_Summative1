@@ -24,7 +24,7 @@ private:
 	static std::string ReadShaderFile(const char* filename);
 	static void PrintErrorDetails(bool isShader, GLuint id, const char* name);
 
-	static std::map<const char*, GLuint> uniqueIDs;
+	static std::map<const char*, GLuint> uniqueIDs;  // a map storing all programs and shaders created
 };
 
 #endif   // __SHADER_H__

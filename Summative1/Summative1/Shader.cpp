@@ -18,7 +18,7 @@ Shader::CreateProgram(const char* vertexShaderFilename, const char* fragmentShad
 {
 	std::string programName = vertexShaderFilename + *fragmentShaderFilename;
 
-	// ensure thgis program has not already been created
+	// ensure this program has not already been created
 	std::map<const char*, GLuint>::iterator iterProgramID;
 	iterProgramID = uniqueIDs.find(programName.c_str());
 	if (iterProgramID != uniqueIDs.end())
@@ -47,6 +47,7 @@ Shader::CreateProgram(const char* vertexShaderFilename, const char* fragmentShad
 			return 0;
 		}
 
+		// add program to map of created programs
 		uniqueIDs.insert(std::pair<const char*, GLuint>(programName.c_str(), program));
 		return program;
 	}
@@ -83,6 +84,7 @@ Shader::CreateShader(GLenum shaderType, const char* shaderName)
 			return 0;
 		}
 
+		// add shader to map of created shaders and programs
 		uniqueIDs.insert(std::pair< const char*, GLuint>(shaderName, shaderID));
 		return shaderID;
 	}

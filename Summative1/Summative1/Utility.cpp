@@ -54,7 +54,7 @@ Utility::MessageCallback(GLenum source, GLenum type, GLuint id, GLenum severity,
 }
 
 
-// time variables and functions
+// this function updates delta time and then sets the rest of the time variables
 void 
 Utility::manageTime(float curr)
 {
@@ -63,6 +63,7 @@ Utility::manageTime(float curr)
 	m_prevTime = m_currentTime;
 }
 
+// this function gets the value of delta time
 float 
 Utility::getDeltaTime()
 {

@@ -37,11 +37,11 @@ int main()
 	// main loop
 	while (glfwWindowShouldClose(windowMain) == false)
 	{
-		// update all objets and run the project
-		update();
-
 		// render all the objects
 		render();
+		
+		// update all objets and run the project
+		update();
 	}
 
 	// ensure correct shutdown of GLFW
@@ -87,7 +87,7 @@ void initialSetup()
 	// set the colour of the window when the buffer is cleared
 	glClearColor(1.0f, 0.0f, 0.0f, 1.0f); // red
 
-	// maps the range f the size to NDC (-1 -> 1)
+	// maps the range of the size to NDC (-1 -> 1)
 	glViewport(0, 0, static_cast<GLsizei>(windWidth), static_cast<GLsizei>(windHeight));
 
 	// enable OpenGL debug context if context allows for debug context
@@ -106,8 +106,10 @@ void initialSetup()
 	// set up camera stuff
 	Camera::initialise(static_cast<float>(windWidth), static_cast<float>(windHeight));
 
+	// ensure loaded images display the right way
 	stbi_set_flip_vertically_on_load(true);
 
+	// set up all the scene objects
 	manager.initialize();
 }
 
@@ -116,8 +118,8 @@ void update()
 {
 	glfwPollEvents();
 
-	Utility::manageTime(static_cast<float>(glfwGetTime()));
-	manager.update();
+	Utility::manageTime(static_cast<float>(glfwGetTime())); // updating delta time
+	manager.update(); // updating all the scene objects
 }
 
 // render all objects
@@ -125,7 +127,7 @@ void render()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	manager.render();
+	manager.render(); // rendering all the scene objects
 
 	glfwSwapBuffers(windowMain);
 }

@@ -18,6 +18,7 @@ Camera::m_viewMatrix = new glm::mat4;
 glm::mat4*
 Camera::m_projectionMatrix = new glm::mat4;
 
+// this function sets up both the view and projection matrix
 void 
 Camera::initialise(float width, float height)
 {
@@ -25,12 +26,14 @@ Camera::initialise(float width, float height)
 	*m_viewMatrix = glm::lookAt(*m_camPos, *m_camPos + *m_camLookDir, *m_camUpDir);
 }
 
+// this function returns a pointer to the view matrix
 glm::mat4*
 Camera::getViewMatrix()
 {
 	return(m_viewMatrix);
 }
 
+// this function returns a pointer to the projection matrix
 glm::mat4*
 Camera::getProjectionMatrix()
 {

@@ -93,6 +93,7 @@ MeshManager::createMesh(Shape shape)
 			glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(6 * sizeof(GLfloat)));  // texture
 			glEnableVertexAttribArray(2);
 
+			// add the VAO and indice count to the created meshes map
 			std::pair<GLuint, int> meshData(vao, 3);
 			m_createdMeshes.insert(std::pair<Shape, std::pair<GLuint, int>>(Shape::TRIANGLE, meshData));
 			return(meshData);
@@ -118,6 +119,7 @@ MeshManager::createMesh(Shape shape)
 			glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(6 * sizeof(GLfloat)));  // texture
 			glEnableVertexAttribArray(2);
 
+			// add the VAO and indice count to the created meshes map
 			std::pair<GLuint, int> meshData(vao, 6);
 			m_createdMeshes.insert(std::pair<Shape, std::pair<GLuint, int>>(Shape::QUAD, meshData));
 			return(meshData);
@@ -143,6 +145,7 @@ MeshManager::createMesh(Shape shape)
 			glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(6 * sizeof(GLfloat)));  // texture
 			glEnableVertexAttribArray(2);
 
+			// add the VAO and indice count to the created meshes map
 			std::pair<GLuint, int> meshData(vao, 12);
 			m_createdMeshes.insert(std::pair<Shape, std::pair<GLuint, int>>(Shape::QUAD, meshData));
 			return(meshData);

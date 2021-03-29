@@ -31,9 +31,8 @@ public:
 	static float getDeltaTime();
 	static float m_currentTime, m_prevTime;
 
-	// converts pair into tuple
-	//static void setTuple(std::tuple)
-
+	// this function enables all uniforms to be created from one function call. this function also checks to make sure
+	// the value of the uniform is valid before creating the uniform
 	template<typename UniformType>
 	static void createUniforms(const char* name, UniformType uniValue, GLuint* program)
 	{
@@ -42,10 +41,6 @@ public:
 
 		if (uniformLocation < 0)
 		{
-			/*std::cout << "Uniform Location for " << name << " is INVALID. Object: "
-				<< getEnumName<ObjectTypes>(static_cast<int>(m_objectType)) << "   Shape: "
-				<< getEnumName<ShapeName>(static_cast<int>(m_shapeName)) << std::endl << std::endl;*/
-
 			std::cout << "Uniform Location for " << name << " is INVALID." << std::endl << std::endl;
 		}
 
@@ -53,6 +48,10 @@ public:
 	}
 
 private:
+	static float m_deltaTime;
+
+	// these functions are used to allow one function to create all types of uniforms. a function for each uniform value type
+	// is declared and defined here as to not clutter in other parts of the program
 	template<typename UniformType> static void createUniPart(GLint location, UniformType uniValue)
 	{
 		std::cout << "ERROR: tried to create Uniform with invalid UniformType" << std::endl;
@@ -69,8 +68,6 @@ private:
 	{
 		glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(uniValue));
 	}
-
-	static float m_deltaTime;
 };
 
 #endif   // __UTILITY_H__

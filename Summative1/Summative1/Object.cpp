@@ -5,6 +5,8 @@
 // this
 #include "Object.h"
 
+// using the specific object type, the constructor will create an instance of the object class and populate it with
+// data from the correct base class
 Object::Object(ObjectType type)
 {
 	m_program = new GLuint();
@@ -17,6 +19,8 @@ Object::Object(ObjectType type)
 	{
 	case ObjectType::KANYE:
 	{
+		initializeKanye();
+
 		m_program = new GLuint(Shader::CreateProgram(m_vertexKanye, m_fragmentKanye));
 		m_mesh = m_meshKanye;
 
@@ -28,6 +32,8 @@ Object::Object(ObjectType type)
 	}
 	case ObjectType::VENERGY:
 	{
+		initializeV();
+
 		m_program = new GLuint(Shader::CreateProgram(m_vertexV, m_fragmentV));
 		m_mesh = m_meshV;
 

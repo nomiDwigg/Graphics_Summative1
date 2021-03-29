@@ -10,7 +10,7 @@
 // library
 #include <map>
 
-enum class Shape
+enum class Shape  // enum for all possible shape types
 {
 	TRIANGLE = 0,
 	QUAD = 1,
@@ -27,7 +27,7 @@ public:
 	//static void editMesh()
 private:
 
-	static std::map<Shape, std::pair<GLuint, int>> m_createdMeshes;
+	static std::map<Shape, std::pair<GLuint, int>> m_createdMeshes;  // map of all created meshes
 
 	static GLfloat m_triVertices[24];
 	static GLuint m_triIndices[3];
