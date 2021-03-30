@@ -37,11 +37,11 @@ int main()
 	// main loop
 	while (glfwWindowShouldClose(windowMain) == false)
 	{
-		// render all the objects
-		render();
-		
 		// update all objets and run the project
 		update();
+		
+		// render all the objects
+		render();
 	}
 
 	// ensure correct shutdown of GLFW

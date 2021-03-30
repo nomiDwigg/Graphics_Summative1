@@ -24,6 +24,7 @@
 #include "MeshManager.h"
 #include "Utility.h"
 #include "Texture.h"
+#include "Shader.h"
 
 class Kanye
 {
@@ -45,8 +46,9 @@ protected:
 	}
 
 	// setting mesh and program data
-	const char* m_vertexKanye = "Resources/Shaders/basic.vs";
-	const char* m_fragmentKanye = "Resources/Shaders/doubleTexture.fs";
+	GLuint m_programKanye = Shader::CreateProgram("Resources/Shaders/basic.vs", "Resources/Shaders/doubleTexture.fs");
+	//const char* m_vertexKanye = "Resources/Shaders/basic.vs";
+	//const char* m_fragmentKanye = "Resources/Shaders/doubleTexture.fs";
 	std::pair<GLuint, int> m_meshKanye = MeshManager::createMesh(Shape::HEXAGON);
 
 	// setting positional data
@@ -99,16 +101,17 @@ protected:
 			std::string path = "Resources/Textures/V_Energy/Frame" + std::to_string(frame);
 			path += ".jpg";
 			GLuint tex = Texture::createTexture(path.c_str());
-			GLenum active = GL_TEXTURE0 + frame;
-			m_textureInfo.push_back(std::tuple<GLenum, GLuint, const char*>(active, tex, "tex"));
+			//GLenum active = GL_TEXTURE0 + frame;
+			m_textureInfo.push_back(tex);
 		}
 
 		m_frameTimer = 0.0f;
 		m_currentFrame = 0;
 	}
+	//const char* m_vertexV = "Resources/Shaders/basic.vs";
+	//const char* m_fragmentV = "Resources/Shaders/basic.fs";
 
-	const char* m_vertexV = "Resources/Shaders/basic.vs";
-	const char* m_fragmentV = "Resources/Shaders/basic.fs";
+	GLuint m_programV = Shader::CreateProgram("Resources/Shaders/basic.vs", "Resources/Shaders/basic.fs");
 	std::pair<GLuint, int> m_meshV = MeshManager::createMesh(Shape::HEXAGON);
 
 	glm::vec3 m_posV = glm::vec3(-75.0f, -150.0f, 0.0f);
@@ -117,14 +120,14 @@ protected:
 
 	void passUniformDataV(GLuint* program)
 	{
-		glActiveTexture(std::get<0>(m_textureInfo[m_currentFrame]));
-		glBindTexture(GL_TEXTURE_2D, std::get<1>(m_textureInfo[m_currentFrame]));
-		Utility::createUniforms(std::get<2>(m_textureInfo[m_currentFrame]), m_currentFrame, program);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, m_textureInfo[m_currentFrame]);
+		Utility::createUniforms<int>("tex", m_currentFrame, program);
 	}
 
 	void update()
 	{
-		if (m_frameTimer < 5.0f)
+		if (m_frameTimer < 0.07f)
 		{
 			m_frameTimer += Utility::getDeltaTime() / 0.001f;
 		}
@@ -135,13 +138,14 @@ protected:
 		}
 
 		//std::cout << "Frame: " << m_currentFrame << "   :   Tex: " << std::get<1>(m_textureInfo[m_currentFrame]) << std::endl;
+		//std::cout << "Frame: " << m_currentFrame << "   :   Active: " << std::get<0>(m_textureInfo[m_currentFrame]) << std::endl;
 
 		//std::cout << "m_frameTimer = " << m_frameTimer << std::endl;
 		//std::cout << "current frame = " << m_currentFrame << std::endl << std::endl;
 	}
 
 private:
-	std::vector<std::tuple<GLenum, GLuint, const char*>> m_textureInfo;
+	std::vector<GLuint> m_textureInfo;
 	float m_frameTimer = 0.0f;
 	int m_currentFrame = 0;
 };

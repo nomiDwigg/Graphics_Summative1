@@ -1,3 +1,6 @@
+// library
+#include <iostream>
+
 // local
 #include "Shader.h"
 #include "Camera.h"
@@ -9,20 +12,15 @@
 // data from the correct base class
 Object::Object(ObjectType type)
 {
-	m_program = new GLuint();
-	m_mesh = std::pair<GLuint, int>(0, 0);
-
-	m_mvp = new glm::mat4;
-
 	m_objType = type;
 	switch (type)
 	{
 	case ObjectType::KANYE:
 	{
-		initializeKanye();
-
-		m_program = new GLuint(Shader::CreateProgram(m_vertexKanye, m_fragmentKanye));
+		m_program = &m_programKanye;//new GLuint(Shader::CreateProgram(m_vertexKanye, m_fragmentKanye));
 		m_mesh = m_meshKanye;
+
+		initializeKanye();
 
 		// set positional data for camera
 		m_pos = &m_posKanye;
@@ -32,10 +30,10 @@ Object::Object(ObjectType type)
 	}
 	case ObjectType::VENERGY:
 	{
-		initializeV();
-
-		m_program = new GLuint(Shader::CreateProgram(m_vertexV, m_fragmentV));
+		m_program = &m_programV;//new GLuint(Shader::CreateProgram(m_vertexV, m_fragmentV));
 		m_mesh = m_meshV;
+
+		initializeV();
 
 		// set positional data for camera
 		m_pos = &m_posV;
@@ -44,8 +42,16 @@ Object::Object(ObjectType type)
 		break;
 	}
 	default:
+	{
+		m_program = new GLuint();
+		m_mesh = std::pair<GLuint, int>(0, 0);
+
+		std::cout << "ERROR: Object Type Invalid" << std::endl << std::endl;
 		break;
 	}
+	}
+
+	m_mvp = new glm::mat4;
 }
 
 Object::~Object()
@@ -68,9 +74,11 @@ Object::render()
 	{
 	case ObjectType::KANYE: { passUniformDataKanye(m_program); break; }
 	case ObjectType::VENERGY: { passUniformDataV(m_program); break; }
-	default: break;
+	default: 
+		break;
 	}
 	glDrawElements(GL_TRIANGLES, std::get<1>(m_mesh), GL_UNSIGNED_INT, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);
 	glBindVertexArray(0);
 	glUseProgram(0);
 }

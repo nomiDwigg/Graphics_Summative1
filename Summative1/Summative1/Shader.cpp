@@ -16,14 +16,15 @@ Shader::uniqueIDs;
 GLuint 
 Shader::CreateProgram(const char* vertexShaderFilename, const char* fragmentShaderFilename)
 {
-	std::string programName = vertexShaderFilename + *fragmentShaderFilename;
+	const char* programName = vertexShaderFilename;
+	programName += fragmentShaderFilename;
 
 	// ensure this program has not already been created
 	std::map<const char*, GLuint>::iterator iterProgramID;
-	iterProgramID = uniqueIDs.find(programName.c_str());
+	iterProgramID = uniqueIDs.find(programName);
 	if (iterProgramID != uniqueIDs.end())
 	{
-		return(uniqueIDs[programName.c_str()]);
+		return(uniqueIDs[programName]);
 	}
 	else
 	{
@@ -43,12 +44,12 @@ Shader::CreateProgram(const char* vertexShaderFilename, const char* fragmentShad
 		glGetProgramiv(program, GL_LINK_STATUS, &link_result);
 		if (link_result == GL_FALSE)
 		{
-			PrintErrorDetails(false, program, programName.c_str());
+			PrintErrorDetails(false, program, programName);
 			return 0;
 		}
 
 		// add program to map of created programs
-		uniqueIDs.insert(std::pair<const char*, GLuint>(programName.c_str(), program));
+		uniqueIDs.insert(std::pair<const char*, GLuint>(programName, program));
 		return program;
 	}
 }
