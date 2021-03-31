@@ -1,20 +1,23 @@
 // dependencies
 #include <stb_image.h>
 
+// library
+#include <iostream>
+
 // this
 #include "Texture.h"
 
 Texture::Texture(void) {}
 Texture::~Texture(void) {}
 
-std::map<const char*, GLuint>
+std::map<std::string, GLuint*>
 Texture::m_textureMap;
 
-GLuint
-Texture::createTexture(const char* filepath)
+GLuint*
+Texture::createTexture(std::string filepath)
 {
 	// check that texture hasnt been created already
-	std::map<const char*, GLuint>::iterator iterTexture = m_textureMap.find(filepath);
+	std::map<std::string, GLuint*>::iterator iterTexture = m_textureMap.find(filepath);
 	if (iterTexture != m_textureMap.end())
 	{
 		return(m_textureMap[filepath]);
@@ -23,12 +26,17 @@ Texture::createTexture(const char* filepath)
 	{
 		// load image data
 		int width, height, components;
-		unsigned char* imageData = stbi_load(filepath, &width, &height, &components, 0);
+		unsigned char* imageData = stbi_load(filepath.c_str(), &width, &height, &components, 0);
+
+		if (imageData == NULL)
+		{
+			std::cout << "error creating texture: " << filepath << "  :  " << stbi_failure_reason() << std::endl;
+		}
 
 		// create and bind a new texture
-		GLuint texture;
-		glGenTextures(1, &texture);
-		glBindTexture(GL_TEXTURE_2D, texture);
+		GLuint* texture = new GLuint();
+		glGenTextures(1, texture);
+		glBindTexture(GL_TEXTURE_2D, *texture);
 
 		// check how many components the loaded image has
 		GLint loadedComponents = (components == 4) ? GL_RGBA : GL_RGB;
@@ -47,7 +55,7 @@ Texture::createTexture(const char* filepath)
 		stbi_image_free(imageData);
 		glBindTexture(GL_TEXTURE_2D, 0);
 
-		m_textureMap.insert(std::pair<const char*, GLuint>(filepath, texture));
+		m_textureMap.insert(std::pair<std::string, GLuint*>(filepath, texture));
 		return(texture);
 	}
 }

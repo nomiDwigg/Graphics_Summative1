@@ -17,10 +17,10 @@ public:
 	Texture(void);
 	~Texture(void);
 
-	static GLuint createTexture(const char* filepath);
+	static GLuint* createTexture(std::string filepath);
 
 private:
-	static std::map<const char*, GLuint> m_textureMap;
+	static std::map<std::string, GLuint*> m_textureMap;
 };
 #endif   // __TEXTURE_H__
 

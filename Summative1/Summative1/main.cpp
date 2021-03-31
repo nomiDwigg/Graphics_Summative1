@@ -37,11 +37,11 @@ int main()
 	// main loop
 	while (glfwWindowShouldClose(windowMain) == false)
 	{
-		// update all objets and run the project
-		update();
-		
 		// render all the objects
 		render();
+
+		// update all objets and run the project
+		update();
 	}
 
 	// ensure correct shutdown of GLFW
@@ -61,6 +61,9 @@ void initialSetup()
 #else           /*for debug*/
 	glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
 #endif
+
+	//int count;
+	//GLFWmonitor** monitors = glfwGetMonitors(&count);
 
 	// create an GLFW controlled context window
 	windowMain = glfwCreateWindow(windWidth, windHeight, "Summative 1", NULL, NULL);

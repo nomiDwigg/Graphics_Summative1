@@ -10,17 +10,17 @@
 Shader::Shader(void) {}
 Shader::~Shader(void) {}
 
-std::map<const char*, GLuint>
+std::map<std::string, GLuint>
 Shader::uniqueIDs;
 
 GLuint 
 Shader::CreateProgram(const char* vertexShaderFilename, const char* fragmentShaderFilename)
 {
-	const char* programName = vertexShaderFilename;
+	std::string programName = vertexShaderFilename;
 	programName += fragmentShaderFilename;
 
 	// ensure this program has not already been created
-	std::map<const char*, GLuint>::iterator iterProgramID;
+	std::map<std::string, GLuint>::iterator iterProgramID;
 	iterProgramID = uniqueIDs.find(programName);
 	if (iterProgramID != uniqueIDs.end())
 	{
@@ -44,12 +44,12 @@ Shader::CreateProgram(const char* vertexShaderFilename, const char* fragmentShad
 		glGetProgramiv(program, GL_LINK_STATUS, &link_result);
 		if (link_result == GL_FALSE)
 		{
-			PrintErrorDetails(false, program, programName);
+			PrintErrorDetails(false, program, programName.c_str());
 			return 0;
 		}
 
 		// add program to map of created programs
-		uniqueIDs.insert(std::pair<const char*, GLuint>(programName, program));
+		uniqueIDs.insert(std::pair<std::string, GLuint>(programName, program));
 		return program;
 	}
 }
@@ -61,7 +61,7 @@ Shader::CreateShader(GLenum shaderType, const char* shaderName)
 	std::string shaderSource = ReadShaderFile(shaderName);
 
 	// ensure that this shader has not already been created
-	std::map<const char*, GLuint>::iterator iterShaderID = uniqueIDs.find(shaderName);
+	std::map<std::string, GLuint>::iterator iterShaderID = uniqueIDs.find(shaderName);
 	if (iterShaderID != uniqueIDs.end())
 	{
 		return(uniqueIDs[shaderName]);
@@ -86,7 +86,7 @@ Shader::CreateShader(GLenum shaderType, const char* shaderName)
 		}
 
 		// add shader to map of created shaders and programs
-		uniqueIDs.insert(std::pair< const char*, GLuint>(shaderName, shaderID));
+		uniqueIDs.insert(std::pair<std::string, GLuint>(shaderName, shaderID));
 		return shaderID;
 	}
 }

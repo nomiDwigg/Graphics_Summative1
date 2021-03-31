@@ -78,8 +78,8 @@ Object::render()
 		break;
 	}
 	glDrawElements(GL_TRIANGLES, std::get<1>(m_mesh), GL_UNSIGNED_INT, 0);
-	glBindTexture(GL_TEXTURE_2D, 0);
 	glBindVertexArray(0);
+	glBindTexture(GL_TEXTURE_2D, 0);
 	glUseProgram(0);
 }
 
