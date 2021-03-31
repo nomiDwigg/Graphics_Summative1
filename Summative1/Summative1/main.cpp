@@ -62,9 +62,6 @@ void initialSetup()
 	glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
 #endif
 
-	//int count;
-	//GLFWmonitor** monitors = glfwGetMonitors(&count);
-
 	// create an GLFW controlled context window
 	windowMain = glfwCreateWindow(windWidth, windHeight, "Summative 1", NULL, NULL);
 	if (windowMain == NULL)

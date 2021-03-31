@@ -161,3 +161,40 @@ MeshManager::createMesh(Shape shape)
 		return(std::pair<GLuint, int>(0, 0));
 	}
 }
+
+void 
+MeshManager::editMesh(Shape shape, std::vector<glm::vec2> mod)
+{
+	switch (shape)
+	{
+	case Shape::TRIANGLE:
+	{
+		for (unsigned int point = 0; point < mod.size(); point++)
+		{
+			m_triVertices[(point * 8) + 6] = mod[point].x;
+			m_triVertices[(point * 8) + 7] = mod[point].y;
+		}
+		break;
+	}
+	case Shape::QUAD:
+	{
+		for (unsigned int point = 0; point < mod.size(); point++)
+		{
+			m_quadVertices[(point * 8) + 6] = mod[point].x;
+			m_quadVertices[(point * 8) + 7] = mod[point].y;
+		}
+		break;
+	}
+	case Shape::HEXAGON:
+	{
+		for (unsigned int point = 0; point < mod.size(); point++)
+		{
+			m_hexVertices[(point * 8) + 6] = mod[point].x;
+			m_hexVertices[(point * 8) + 7] = mod[point].y;
+		}
+		break;
+	}
+	default:
+		break;
+	}
+}

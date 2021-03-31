@@ -43,6 +43,15 @@ protected:
 		m_textureInfo.push_back(std::tuple<GLenum, GLuint*, const char*>(GL_TEXTURE1, tex, "tex1"));
 
 		mixValue = 0.0f;
+
+		// this makes sure the texture coordinates dont change for this shape 
+		// if another shape using the same mesh needs to change the texture coords
+		m_texCoordsKanye.push_back(glm::vec2(0.2f, 1.0f));
+		m_texCoordsKanye.push_back(glm::vec2(0.0f, 0.5f));
+		m_texCoordsKanye.push_back(glm::vec2(0.2f, 0.0f));
+		m_texCoordsKanye.push_back(glm::vec2(0.8f, 0.0f));
+		m_texCoordsKanye.push_back(glm::vec2(1.0f, 0.5f));
+		m_texCoordsKanye.push_back(glm::vec2(0.8f, 1.0f));
 	}
 
 	// setting mesh and program data
@@ -53,6 +62,9 @@ protected:
 	glm::vec3 m_posKanye = glm::vec3(-75.0f, 150.0f, 0.0f);
 	glm::vec3 m_scaleKanye = glm::vec3(150.0f, 150.0f, 0.0f);
 	float m_rotationDegreesKanye = 0.0f;
+	
+	// texture coordinate data
+	std::vector<glm::vec2> m_texCoordsKanye;
 
 	// this function stores all the specific texture data that this hexagon will need
 	void passUniformDataKanye(GLuint* program)
@@ -80,7 +92,6 @@ private:
 	float mixValue = 0.0f;
 };
 
-
 class VEnergy
 {
 public:
@@ -105,6 +116,15 @@ protected:
 
 		m_frameTimer = 0.0f;
 		m_currentFrame = 0;
+
+		// this makes sure the texture coordinates dont change for this shape 
+		// if another shape using the same mesh needs to change the texture coords
+		m_texCoordsV.push_back(glm::vec2(0.2f, 1.0f));
+		m_texCoordsV.push_back(glm::vec2(0.0f, 0.5f));
+		m_texCoordsV.push_back(glm::vec2(0.2f, 0.0f));
+		m_texCoordsV.push_back(glm::vec2(0.8f, 0.0f));
+		m_texCoordsV.push_back(glm::vec2(1.0f, 0.5f));
+		m_texCoordsV.push_back(glm::vec2(0.8f, 1.0f));
 	}
 
 	// setting mesh and program data
@@ -114,6 +134,9 @@ protected:
 	glm::vec3 m_posV = glm::vec3(-75.0f, -150.0f, 0.0f);
 	glm::vec3 m_scaleV = glm::vec3(150.0f, 150.0f, 0.0f);
 	float m_rotationV = 0.0f;
+
+	// the tex coord data
+	std::vector<glm::vec2> m_texCoordsV;
 
 	void passUniformDataV(GLuint* program)
 	{
@@ -131,19 +154,95 @@ protected:
 			m_currentFrame = (m_currentFrame >= 5) ? 0 : m_currentFrame + 1;
 			m_frameTimer = 0.0f;
 		}
-
-		//std::cout << "Frame: " << m_currentFrame << "   :   Tex: " << std::get<1>(m_textureInfo[m_currentFrame]) << std::endl;
-		//std::cout << "Frame: " << m_currentFrame << "   :   Tex: " << m_textureInfo[m_currentFrame];
-		//std::cout << "  :  " << *m_textureInfo[m_currentFrame] << std::endl;
-
-		//std::cout << "m_frameTimer = " << m_frameTimer << std::endl;
-		//std::cout << "current frame = " << m_currentFrame << std::endl << std::endl;
 	}
 
 private:
 	std::vector<GLuint*> m_textureInfo;
 	float m_frameTimer = 0.0f;
 	int m_currentFrame = 0;
+};
+
+class Walk
+{
+public:
+
+protected:
+	Walk() {}
+	~Walk() {}
+
+	void initialiseWalk()
+	{
+		m_texture = Texture::createTexture("Resources/Textures/SpriteSheet.png");
+	}
+
+	// mesh and program data
+	GLuint m_programWalk = Shader::CreateProgram("Resources/Shaders/basic.vs", "Resources/Shaders/basic.fs");
+	std::pair<GLuint, int> m_meshWalk = MeshManager::createMesh(Shape::QUAD);
+
+	// positional data
+	glm::vec3 m_posWalk = glm::vec3(0.0f, 0.0f, 0.0f);
+	glm::vec3 m_scaleWalk = glm::vec3(150.0f, 150.0f, 0.0f);
+	float m_rotationV = 0.0f;
+
+	// the tex coord data
+	std::vector<glm::vec2> m_texCoordsWalk;
+
+	void updateWalk()
+	{
+		if ((m_posWalk.x <= -550.0f) && (m_posWalk.y <= -350.0f)) // hits bottom left corner 
+		{ 
+			// set new speed and frame data
+			m_currentFrame = glm::vec2(0, 0);
+			m_speed = glm::vec2(0.0f, 5.0f);
+		}
+		if ((m_posWalk.x <= -550.0f) && (m_posWalk.y >= 350.0f)) // hits top left corner 
+		{
+			// set new speed and frame data
+			m_currentFrame = glm::vec2(0, 3);
+			m_speed = glm::vec2(5.0f, 0.0f);
+		}
+		if ((m_posWalk.x >= 550.0f) && (m_posWalk.y >= 350.0f)) // hits top right corner 
+		{
+			// set new speed and frame data
+			m_currentFrame = glm::vec2(0, 2);
+			m_speed = glm::vec2(0.0f, -5.0f);
+		}
+		if ((m_posWalk.x >= 550.0f) && (m_posWalk.y <= -350.0f)) // hits bottom right corner 
+		{
+			// set new speed and frame data
+			m_currentFrame = glm::vec2(0, 1);
+			m_speed = glm::vec2(-5.0f, 0.0f);
+
+			// change tex coords to match new movement direction
+			for (unsigned int point = 0; point < m_texCoordsWalk.size(); point++)
+			{
+				m_texCoordsWalk[point].x += 1.0f / static_cast<float>(m_frameNum.x);
+			}
+		}
+
+		m_frameTimer += Utility::getDeltaTime() / 0.001f;
+
+		if (m_frameTimer >= 0.07f)
+		{
+			m_currentFrame.x = (m_currentFrame.x >= m_frameNum.x) ? 0 : m_currentFrame.x + 1;
+			m_frameTimer = 0.0f;
+
+			for (unsigned int point = 0; point < m_texCoordsWalk.size(); point++)
+			{
+				m_texCoordsWalk[point].x += 1.0f / static_cast<float>(m_frameNum.x);
+			}
+		}
+	}
+
+private:
+	GLuint* m_texture = new GLuint();
+
+	// frame data
+	glm::vec2 m_frameNum = glm::vec2(9, 4);
+	glm::vec2 m_currentFrame = glm::vec2(0, 0);
+	glm::vec2 m_speed = glm::vec2(0.0f, 0.0f);
+	float m_frameTimer = 0.0f;
+
 };
 
 #endif   // __SCENE_OBJECTS_H__

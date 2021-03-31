@@ -6,9 +6,11 @@
 // Dependencies
 #include <glew.h>
 #include <glfw3.h>
+#include <glm.hpp>
 
 // library
 #include <map>
+#include <vector>
 
 enum class Shape  // enum for all possible shape types
 {
@@ -24,7 +26,8 @@ public:
 	~MeshManager(void);
 
 	static std::pair<GLuint, int> createMesh(Shape shape);
-	//static void editMesh()
+	static void editMesh(Shape shape, std::vector<glm::vec2> mod);
+
 private:
 
 	static std::map<Shape, std::pair<GLuint, int>> m_createdMeshes;  // map of all created meshes
@@ -35,6 +38,7 @@ private:
 	static GLuint m_quadIndices[6];
 	static GLfloat m_hexVertices[48];
 	static GLuint m_hexIndices[12];
+
 };
 
 #endif    // __MESH_MANAGER_H__
