@@ -26,6 +26,8 @@ Object::Object(ObjectType type)
 		m_pos = &m_posKanye;
 		m_rot = &m_rotationDegreesKanye;
 		m_scale = &m_scaleKanye;
+
+		m_texCoords = m_texCoordsKanye;
 		break;
 	}
 	case ObjectType::VENERGY:
@@ -39,12 +41,30 @@ Object::Object(ObjectType type)
 		m_pos = &m_posV;
 		m_rot = &m_rotationV;
 		m_scale = &m_scaleV;
+
+		m_texCoords = m_texCoordsV;
+		break;
+	}
+	case ObjectType::WALK:
+	{
+		m_program = &m_programWalk;//new GLuint(Shader::CreateProgram(m_vertexV, m_fragmentV));
+		m_mesh = m_meshWalk;
+
+		initializeWalk();
+
+		// set positional data for camera
+		m_pos = &m_posWalk;
+		m_rot = &m_rotationWalk;
+		m_scale = &m_scaleWalk;
+
+		m_texCoords = m_texCoordsWalk;
 		break;
 	}
 	default:
 	{
 		m_program = new GLuint();
 		m_mesh = std::pair<GLuint, int>(0, 0);
+		m_texCoords = m_texCoordsKanye;
 
 		std::cout << "ERROR: Object Type Invalid" << std::endl << std::endl;
 		break;
@@ -74,6 +94,7 @@ Object::render()
 	{
 	case ObjectType::KANYE: { passUniformDataKanye(m_program); break; }
 	case ObjectType::VENERGY: { passUniformDataV(m_program); break; }
+	case ObjectType::WALK: { passUniformDataWalk(m_program); break; }
 	default: 
 		break;
 	}
@@ -90,9 +111,11 @@ Object::update()
 	{
 	case ObjectType::KANYE: {Kanye::update(); break; }
 	case ObjectType::VENERGY: {VEnergy::update(); break; }
+	case ObjectType::WALK: {Walk::update(); break; }
 	default: break;
 	}
 
+	MeshManager::editMesh(static_cast<int>(m_objType), m_texCoords);
 	calculateMVP();
 }
 

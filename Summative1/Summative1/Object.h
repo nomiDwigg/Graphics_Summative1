@@ -19,10 +19,11 @@
 enum class ObjectType
 {
 	KANYE = 0,
-	VENERGY = 1
+	VENERGY = 1,
+	WALK = 2
 };
 
-class Object : public Kanye, public VEnergy
+class Object : public Kanye, public VEnergy, public Walk
 {
 public:
 	Object(ObjectType type);
@@ -44,6 +45,9 @@ private:
 	void calculateMVP();
 
 	glm::mat4* m_mvp;
+
+	// the tex coord data
+	std::vector<glm::vec2> m_texCoords;
 };
 
 #endif   // __OBJECT_H__

@@ -147,7 +147,7 @@ MeshManager::createMesh(Shape shape)
 
 			// add the VAO and indice count to the created meshes map
 			std::pair<GLuint, int> meshData(vao, 12);
-			m_createdMeshes.insert(std::pair<Shape, std::pair<GLuint, int>>(Shape::QUAD, meshData));
+			m_createdMeshes.insert(std::pair<Shape, std::pair<GLuint, int>>(Shape::HEXAGON, meshData));
 			return(meshData);
 			break;
 		}
@@ -163,8 +163,10 @@ MeshManager::createMesh(Shape shape)
 }
 
 void 
-MeshManager::editMesh(Shape shape, std::vector<glm::vec2> mod)
+MeshManager::editMesh(int shape_i, std::vector<glm::vec2> mod)
 {
+	Shape shape = static_cast<Shape>(shape_i);
+
 	switch (shape)
 	{
 	case Shape::TRIANGLE:

@@ -26,7 +26,7 @@ public:
 	~MeshManager(void);
 
 	static std::pair<GLuint, int> createMesh(Shape shape);
-	static void editMesh(Shape shape, std::vector<glm::vec2> mod);
+	static void editMesh(int shape_i, std::vector<glm::vec2> mod);
 
 private:
 
