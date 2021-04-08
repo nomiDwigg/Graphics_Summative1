@@ -163,10 +163,8 @@ MeshManager::createMesh(Shape shape)
 }
 
 void 
-MeshManager::editMesh(int shape_i, std::vector<glm::vec2> mod)
+MeshManager::editMesh(Shape shape, std::vector<glm::vec2> mod)
 {
-	Shape shape = static_cast<Shape>(shape_i);
-
 	switch (shape)
 	{
 	case Shape::TRIANGLE:
@@ -198,5 +196,23 @@ MeshManager::editMesh(int shape_i, std::vector<glm::vec2> mod)
 	}
 	default:
 		break;
+	}
+
+	std::cout << "Quad" << std::endl;
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 8; j++)
+		{
+			std::cout << m_quadVertices[(i * 8) + j] << ", ";
+			if (j == 2)
+			{
+				std::cout << "   ";
+			}
+			if (j == 5)
+			{
+				std::cout << "   ";
+			}
+		}
+		std::cout << std::endl;
 	}
 }

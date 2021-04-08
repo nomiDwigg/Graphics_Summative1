@@ -41,6 +41,7 @@ private:
 	std::pair<GLuint, int> m_mesh;  // VAO, IndicesNum
 
 	ObjectType m_objType;
+	Shape m_shapeType;
 
 	void calculateMVP();
 

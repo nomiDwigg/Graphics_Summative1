@@ -18,9 +18,10 @@ Object::Object(ObjectType type)
 	case ObjectType::KANYE:
 	{
 		m_program = &m_programKanye;//new GLuint(Shader::CreateProgram(m_vertexKanye, m_fragmentKanye));
-		m_mesh = m_meshKanye;
 
 		initializeKanye();
+		m_mesh = m_meshKanye;
+		m_shapeType = m_shapeKanye;
 
 		// set positional data for camera
 		m_pos = &m_posKanye;
@@ -33,9 +34,10 @@ Object::Object(ObjectType type)
 	case ObjectType::VENERGY:
 	{
 		m_program = &m_programV;//new GLuint(Shader::CreateProgram(m_vertexV, m_fragmentV));
-		m_mesh = m_meshV;
 
 		initializeV();
+		m_mesh = m_meshV;
+		m_shapeType = m_shapeV;
 
 		// set positional data for camera
 		m_pos = &m_posV;
@@ -48,9 +50,10 @@ Object::Object(ObjectType type)
 	case ObjectType::WALK:
 	{
 		m_program = &m_programWalk;//new GLuint(Shader::CreateProgram(m_vertexV, m_fragmentV));
-		m_mesh = m_meshWalk;
 
 		initializeWalk();
+		m_mesh = m_meshWalk;
+		m_shapeType = m_shapeWalk;
 
 		// set positional data for camera
 		m_pos = &m_posWalk;
@@ -65,12 +68,14 @@ Object::Object(ObjectType type)
 		m_program = new GLuint();
 		m_mesh = std::pair<GLuint, int>(0, 0);
 		m_texCoords = m_texCoordsKanye;
+		m_shapeType = m_shapeKanye;
 
 		std::cout << "ERROR: Object Type Invalid" << std::endl << std::endl;
 		break;
 	}
 	}
 
+	//MeshManager::editMesh(m_shapeType, m_texCoords);
 	m_mvp = new glm::mat4;
 }
 
@@ -115,7 +120,7 @@ Object::update()
 	default: break;
 	}
 
-	MeshManager::editMesh(static_cast<int>(m_objType), m_texCoords);
+	//MeshManager::editMesh(m_shapeType, m_texCoords);
 	calculateMVP();
 }
 

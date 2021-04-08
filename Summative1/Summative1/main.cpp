@@ -100,6 +100,10 @@ void initialSetup()
 		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
 	}
 
+	// draw transperant objects and blend colour
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	// setup time stuff
 	Utility::m_prevTime = static_cast<float>(glfwGetTime());
 

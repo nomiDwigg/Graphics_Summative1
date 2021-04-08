@@ -64,6 +64,10 @@ private:
 	{
 		glUniform1f(location, uniValue);
 	}
+	template<> static void createUniPart<glm::vec2>(GLint location, glm::vec2 uniValue)
+	{
+		glUniform2fv(location, 1, glm::value_ptr(uniValue));
+	}
 	template<> static void createUniPart<glm::mat4>(GLint location, glm::mat4 uniValue)
 	{
 		glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(uniValue));

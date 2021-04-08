@@ -169,6 +169,9 @@
     <None Include="Resources\Shaders\doubleTexture.fs" />
     <None Include="Resources\Shaders\basic.fs" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Resources\Shaders\SpriteSheet.fs" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
