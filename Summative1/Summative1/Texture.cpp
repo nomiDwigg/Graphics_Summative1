@@ -42,8 +42,7 @@ Texture::createTexture(std::string filepath)
 		GLint loadedComponents = (components == 4) ? GL_RGBA : GL_RGB;
 
 		// populate the texture with the image data
-		glTexImage2D(GL_TEXTURE_2D, 0, loadedComponents, width, height, 0, 
-			loadedComponents, GL_UNSIGNED_BYTE, imageData);
+		glTexImage2D(GL_TEXTURE_2D, 0, loadedComponents, width, height, 0, loadedComponents, GL_UNSIGNED_BYTE, imageData);
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);

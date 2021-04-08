@@ -50,7 +50,7 @@ private:
 	glm::mat4* m_mvp;
 
 	// the tex coord data
-	std::vector<glm::vec2> m_texCoords;
+	std::vector<glm::vec4> m_texCoords;
 };
 
 #endif   // __OBJECT_H__

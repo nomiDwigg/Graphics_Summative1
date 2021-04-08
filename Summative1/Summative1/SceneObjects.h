@@ -46,8 +46,9 @@ protected:
 
 		// this makes sure the texture coordinates dont change for this shape 
 		// if another shape using the same mesh needs to change the texture coords
-		m_texCoordsKanye = { glm::vec2(0.2f, 1.0f), glm::vec2(0.0f, 0.5f), glm::vec2(0.2f, 0.0f), 
-			glm::vec2(0.8f, 0.0f), glm::vec2(1.0f, 0.5f), glm::vec2(0.8f, 1.0f) };
+		m_texCoordsKanye = { glm::vec4(-0.5f, 1.0f, 0.2f, 1.0f), glm::vec4(-1.0f, 0.0f, 0.0f, 0.5f), 
+			glm::vec4(-0.5f, -1.0f, 0.2f, 0.0f), glm::vec4(0.5f, -1.0f, 0.8f, 0.0f), glm::vec4(1.0f, 0.0f, 1.0f, 0.5f),
+			glm::vec4(0.5f, 1.0f, 0.8f, 1.0f) };
 		MeshManager::editMesh(Shape::HEXAGON, m_texCoordsKanye);
 		m_meshKanye = MeshManager::createMesh(Shape::HEXAGON);
 	}
@@ -63,7 +64,7 @@ protected:
 	float m_rotationDegreesKanye = 0.0f;
 	
 	// texture coordinate data
-	std::vector<glm::vec2> m_texCoordsKanye;
+	std::vector<glm::vec4> m_texCoordsKanye;
 
 	// this function stores all the specific texture data that this hexagon will need
 	void passUniformDataKanye(GLuint* program)
@@ -118,8 +119,9 @@ protected:
 
 		// this makes sure the texture coordinates dont change for this shape 
 		// if another shape using the same mesh needs to change the texture coords
-		m_texCoordsV = { glm::vec4(-0.0f, 0.0f, 0.2f, 1.0f), glm::vec4(0.0f, 0.0f, 0.0f, 0.5f), glm::vec4(0.0f, 0.0f, 0.2f, 0.0f), 
-			glm::vec4(0.0f, 0.0f, 0.8f, 0.0f), glm::vec4(0.0f, 0.0f, 1.0f, 0.5f), glm::vec4(0.0f, 0.0f, 0.8f, 1.0f) };
+		m_texCoordsV = { glm::vec4(-0.3075f, 1.0f, 0.2f, 1.0f), glm::vec4(-0.615f, 0.0f, 0.0f, 0.5f),
+			glm::vec4(-0.3075f, -1.0f, 0.2f, 0.0f), glm::vec4(0.3075f, -1.0f, 0.8f, 0.0f),
+			glm::vec4(0.615f, 0.0f, 1.0f, 0.5f), glm::vec4(0.3075f, 1.0f, 0.8f, 1.0f) };
 		MeshManager::editMesh(Shape::HEXAGON, m_texCoordsV);
 		m_meshV = MeshManager::createMesh(Shape::HEXAGON);
 	}
@@ -165,14 +167,15 @@ class Walk
 public:
 
 protected:
+
 	Walk() {}
 	~Walk() {}
 
 	void initializeWalk()
 	{
 		// the tex coord data
-		m_texCoordsWalk = { glm::vec2(0.0f, 1.0f), glm::vec2(0.0f, 0.75f),
-			glm::vec2((1.0f / 9.0f), 0.75f), glm::vec2((1.0f / 9.0f), 1.0f) };
+		m_texCoordsWalk = { glm::vec4(-1.0f, 1.0f, 0.0f, 1.0f), glm::vec4(-1.0f, -1.0f, 0.0f, 0.75f),
+			glm::vec4(1.0f, -1.0f, (1.0f / 9.0f), 0.75f), glm::vec4(1.0f, 1.0f, (1.0f / 9.0f), 1.0f) };
 		MeshManager::editMesh(Shape::QUAD, m_texCoordsWalk);
 		m_meshWalk = MeshManager::createMesh(Shape::QUAD);
 
@@ -183,7 +186,7 @@ protected:
 	GLuint m_programWalk = Shader::CreateProgram("Resources/Shaders/basic.vs", "Resources/Shaders/SpriteSheet.fs");
 	std::pair<GLuint, int> m_meshWalk;
 	Shape m_shapeWalk = Shape::QUAD;
-	std::vector<glm::vec2> m_texCoordsWalk;
+	std::vector<glm::vec4> m_texCoordsWalk;
 
 	// positional data
 	glm::vec3 m_posWalk = glm::vec3(-550.0f, -350.0f, 0.0f);
@@ -251,7 +254,7 @@ private:
 
 	// frame data
 	glm::vec2 m_frameNum = glm::vec2(9, 4);
-	glm::vec2 m_currentFrame = glm::vec2(0, 0);
+	glm::vec2 m_currentFrame = glm::vec2(0.0f, 0.0f);
 	glm::vec2 m_speed = glm::vec2(0.0f, 0.0f);
 	float m_frameTimer = 0.0f;
 
@@ -260,14 +263,17 @@ private:
 class Spiral
 {
 public:
+
 protected:
+
 	Spiral() {}
 	~Spiral() {}
 
 	void initializeSpiral()
 	{
 		//set up texture coords and create mesh
-		m_texCoordsSpiral = { glm::vec2(0.5f, 1.0f), glm::vec2(0.125f, 0.0f), glm::vec2(1.0f, 0.875f) };
+		m_texCoordsSpiral = { glm::vec4(0.0f, 0.85f, 0.5f, 1.0f), glm::vec4(-1.0f, -0.85f, 0.125f, 0.0f), 
+			glm::vec4(1.0f, -0.85f, 1.0f, 0.875f) };
 		MeshManager::editMesh(Shape::TRIANGLE, m_texCoordsSpiral);
 		m_meshSpiral = MeshManager::createMesh(Shape::TRIANGLE);
 
@@ -279,7 +285,7 @@ protected:
 	GLuint m_programSpiral = Shader::CreateProgram("Resources/Shaders/basic.vs", "Resources/Shaders/basic.fs");
 	std::pair<GLuint, int> m_meshSpiral;
 	Shape m_shapeSpiral = Shape::TRIANGLE;
-	std::vector<glm::vec2> m_texCoordsSpiral;
+	std::vector<glm::vec4> m_texCoordsSpiral;
 
 	// positional data
 	glm::vec3 m_posSpiral = glm::vec3(300.0f, 225.0f, 0.0f);
@@ -305,31 +311,29 @@ private:
 class Duck
 {
 public:
+
 protected:
+
 	Duck() {}
 	~Duck() {}
 
 	void initializeDuck()
 	{
 		//set up texture coords and create mesh
-		m_texCoordsDuck = { glm::vec2(0.5f, 1.0f), glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 0.0f) };
+		m_texCoordsDuck = { glm::vec4(0.0f, 0.85f, 0.5f, 1.0f), glm::vec4(-1.0f, -0.85f, 0.0f, 0.0f),
+			glm::vec4(1.0f, -0.85f, 1.0f, 0.0f) };
 		MeshManager::editMesh(Shape::TRIANGLE, m_texCoordsDuck);
 		m_meshDuck = MeshManager::createMesh(Shape::TRIANGLE);
 
 		// set up texture
 		m_texture = Texture::createTexture("Resources/Textures/Duck.jpg");
-
-		//other data
-		m_maxScale = 200.0f;
-		m_minScale = 25.0f;
-		m_modify = 1.0f;
 	}
 
 	// set up program and mesh data
 	GLuint m_programDuck = Shader::CreateProgram("Resources/Shaders/basic.vs", "Resources/Shaders/basic.fs");
 	std::pair<GLuint, int> m_meshDuck;
 	Shape m_shapeDuck = Shape::TRIANGLE;
-	std::vector<glm::vec2> m_texCoordsDuck;
+	std::vector<glm::vec4> m_texCoordsDuck;
 
 	// positional data
 	glm::vec3 m_posDuck = glm::vec3(300.0f, 0.0f, 0.0f);
@@ -356,8 +360,8 @@ protected:
 
 private:
 	GLuint* m_texture = new GLuint();
-	float m_maxScale, m_minScale;
-	float m_modify;
+	float m_maxScale = 200.0f, m_minScale = 25.0f;
+	float m_modify = 1.0f;
 };
 
 #endif   // __SCENE_OBJECTS_H__
