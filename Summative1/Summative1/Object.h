@@ -20,10 +20,12 @@ enum class ObjectType
 {
 	KANYE = 0,
 	VENERGY = 1,
-	WALK = 2
+	WALK = 2,
+	SPIRAL = 3,
+	DUCK = 4
 };
 
-class Object : public Kanye, public VEnergy, public Walk
+class Object : public Kanye, public VEnergy, public Walk, public Spiral, public Duck
 {
 public:
 	Object(ObjectType type);

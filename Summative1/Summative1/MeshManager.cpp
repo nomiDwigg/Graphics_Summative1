@@ -13,9 +13,9 @@ MeshManager::m_createdMeshes;
 GLfloat
 MeshManager::m_triVertices[24] = {
 	// position           // colour          // texture
-	 0.0f, 0.1f, 0.0f,   1.0f, 0.0f, 0.0f,   0.5f, 1.0f,  // top point
-	-1.0f, 0.0f, 0.0f,   0.0f, 1.0f, 0.0f,   0.0f, 0.0f,  // left point
-	 1.0f, 0.0f, 0.0f,   0.0f, 0.0f, 1.0f,   1.0f, 0.0f,  // right point
+	 0.0f,  1.0f, 0.0f,   1.0f, 0.0f, 0.0f,   0.5f, 1.0f,  // top point
+	-1.0f, -1.0f, 0.0f,   0.0f, 1.0f, 0.0f,   0.0f, 0.0f,  // left point
+	 1.0f, -1.0f, 0.0f,   0.0f, 0.0f, 1.0f,   1.0f, 0.0f,  // right point
 };
 GLuint
 MeshManager::m_triIndices[3] = {
@@ -163,7 +163,7 @@ MeshManager::createMesh(Shape shape)
 }
 
 void 
-MeshManager::editMesh(Shape shape, std::vector<glm::vec2> mod)
+MeshManager::editMesh(Shape shape, std::vector<glm::vec4> mod)
 {
 	switch (shape)
 	{
@@ -171,8 +171,10 @@ MeshManager::editMesh(Shape shape, std::vector<glm::vec2> mod)
 	{
 		for (unsigned int point = 0; point < mod.size(); point++)
 		{
-			m_triVertices[(point * 8) + 6] = mod[point].x;
-			m_triVertices[(point * 8) + 7] = mod[point].y;
+			m_triVertices[(point * 8)] = mod[point].x;
+			m_triVertices[(point * 8) + 1] = mod[point].y;
+			m_triVertices[(point * 8) + 6] = mod[point].z;
+			m_triVertices[(point * 8) + 7] = mod[point].w;
 		}
 		break;
 	}
@@ -180,8 +182,10 @@ MeshManager::editMesh(Shape shape, std::vector<glm::vec2> mod)
 	{
 		for (unsigned int point = 0; point < mod.size(); point++)
 		{
-			m_quadVertices[(point * 8) + 6] = mod[point].x;
-			m_quadVertices[(point * 8) + 7] = mod[point].y;
+			m_quadVertices[(point * 8)] = mod[point].x;
+			m_quadVertices[(point * 8) + 1] = mod[point].y;
+			m_quadVertices[(point * 8) + 6] = mod[point].z;
+			m_quadVertices[(point * 8) + 7] = mod[point].w;
 		}
 		break;
 	}
@@ -189,30 +193,14 @@ MeshManager::editMesh(Shape shape, std::vector<glm::vec2> mod)
 	{
 		for (unsigned int point = 0; point < mod.size(); point++)
 		{
-			m_hexVertices[(point * 8) + 6] = mod[point].x;
-			m_hexVertices[(point * 8) + 7] = mod[point].y;
+			m_hexVertices[(point * 8)] = mod[point].x;
+			m_hexVertices[(point * 8) + 1] = mod[point].y;
+			m_hexVertices[(point * 8) + 6] = mod[point].z;
+			m_hexVertices[(point * 8) + 7] = mod[point].w;
 		}
 		break;
 	}
 	default:
 		break;
-	}
-
-	std::cout << "Quad" << std::endl;
-	for (int i = 0; i < 4; i++)
-	{
-		for (int j = 0; j < 8; j++)
-		{
-			std::cout << m_quadVertices[(i * 8) + j] << ", ";
-			if (j == 2)
-			{
-				std::cout << "   ";
-			}
-			if (j == 5)
-			{
-				std::cout << "   ";
-			}
-		}
-		std::cout << std::endl;
 	}
 }

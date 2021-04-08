@@ -118,8 +118,8 @@ protected:
 
 		// this makes sure the texture coordinates dont change for this shape 
 		// if another shape using the same mesh needs to change the texture coords
-		m_texCoordsV = { glm::vec2(0.2f, 1.0f), glm::vec2(0.0f, 0.5f), glm::vec2(0.2f, 0.0f), glm::vec2(0.8f, 0.0f),
-			glm::vec2(1.0f, 0.5f), glm::vec2(0.8f, 1.0f) };
+		m_texCoordsV = { glm::vec4(-0.0f, 0.0f, 0.2f, 1.0f), glm::vec4(0.0f, 0.0f, 0.0f, 0.5f), glm::vec4(0.0f, 0.0f, 0.2f, 0.0f), 
+			glm::vec4(0.0f, 0.0f, 0.8f, 0.0f), glm::vec4(0.0f, 0.0f, 1.0f, 0.5f), glm::vec4(0.0f, 0.0f, 0.8f, 1.0f) };
 		MeshManager::editMesh(Shape::HEXAGON, m_texCoordsV);
 		m_meshV = MeshManager::createMesh(Shape::HEXAGON);
 	}
@@ -134,7 +134,7 @@ protected:
 	float m_rotationV = 0.0f;
 
 	// the tex coord data
-	std::vector<glm::vec2> m_texCoordsV;
+	std::vector<glm::vec4> m_texCoordsV;
 
 	void passUniformDataV(GLuint* program)
 	{
@@ -178,11 +178,6 @@ protected:
 
 		m_texture = Texture::createTexture("Resources/Textures/SpriteSheet.png");
 	}
-
-	//m_texCoordsWalk.push_back(glm::vec2(0.0f, 1.0f));               // left top
-	//m_texCoordsWalk.push_back(glm::vec2(0.0f, 0.75f));              // left bot
-	//m_texCoordsWalk.push_back(glm::vec2((1.0f / 9.0f), 0.75f));     // right bot
-	//m_texCoordsWalk.push_back(glm::vec2((1.0f / 9.0f), 1.0f));      // right top
 
 	// mesh and program data
 	GLuint m_programWalk = Shader::CreateProgram("Resources/Shaders/basic.vs", "Resources/Shaders/SpriteSheet.fs");
@@ -260,6 +255,109 @@ private:
 	glm::vec2 m_speed = glm::vec2(0.0f, 0.0f);
 	float m_frameTimer = 0.0f;
 
+};
+
+class Spiral
+{
+public:
+protected:
+	Spiral() {}
+	~Spiral() {}
+
+	void initializeSpiral()
+	{
+		//set up texture coords and create mesh
+		m_texCoordsSpiral = { glm::vec2(0.5f, 1.0f), glm::vec2(0.125f, 0.0f), glm::vec2(1.0f, 0.875f) };
+		MeshManager::editMesh(Shape::TRIANGLE, m_texCoordsSpiral);
+		m_meshSpiral = MeshManager::createMesh(Shape::TRIANGLE);
+
+		// set up texture
+		m_texture = Texture::createTexture("Resources/Textures/Spiral.jpg");
+	}
+
+	// set up program and mesh data
+	GLuint m_programSpiral = Shader::CreateProgram("Resources/Shaders/basic.vs", "Resources/Shaders/basic.fs");
+	std::pair<GLuint, int> m_meshSpiral;
+	Shape m_shapeSpiral = Shape::TRIANGLE;
+	std::vector<glm::vec2> m_texCoordsSpiral;
+
+	// positional data
+	glm::vec3 m_posSpiral = glm::vec3(300.0f, 225.0f, 0.0f);
+	glm::vec3 m_scaleSpiral = glm::vec3(100.0f, 100.0f, 0.0f);
+	float m_rotationSpiral = 0.0f;
+
+	void update()
+	{
+		m_rotationSpiral -= 1.0f;
+	}
+
+	void passUniformDataSpiral(GLuint* program)
+	{
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, *m_texture);
+		Utility::createUniforms<int>("tex", 0, program);
+	}
+
+private:
+	GLuint* m_texture = new GLuint();
+};
+
+class Duck
+{
+public:
+protected:
+	Duck() {}
+	~Duck() {}
+
+	void initializeDuck()
+	{
+		//set up texture coords and create mesh
+		m_texCoordsDuck = { glm::vec2(0.5f, 1.0f), glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 0.0f) };
+		MeshManager::editMesh(Shape::TRIANGLE, m_texCoordsDuck);
+		m_meshDuck = MeshManager::createMesh(Shape::TRIANGLE);
+
+		// set up texture
+		m_texture = Texture::createTexture("Resources/Textures/Duck.jpg");
+
+		//other data
+		m_maxScale = 200.0f;
+		m_minScale = 25.0f;
+		m_modify = 1.0f;
+	}
+
+	// set up program and mesh data
+	GLuint m_programDuck = Shader::CreateProgram("Resources/Shaders/basic.vs", "Resources/Shaders/basic.fs");
+	std::pair<GLuint, int> m_meshDuck;
+	Shape m_shapeDuck = Shape::TRIANGLE;
+	std::vector<glm::vec2> m_texCoordsDuck;
+
+	// positional data
+	glm::vec3 m_posDuck = glm::vec3(300.0f, 0.0f, 0.0f);
+	glm::vec3 m_scaleDuck = glm::vec3(100.0f, 100.0f, 0.0f);
+	float m_rotationDuck = 0.0f;
+
+	void update()
+	{
+		if ((m_scaleDuck.x <= m_minScale) || (m_scaleDuck.x >= m_maxScale))
+		{
+			m_modify *= -1.0f;
+		}
+
+		m_scaleDuck.x += m_modify;
+		m_scaleDuck.y += m_modify;
+	}
+
+	void passUniformDataDuck(GLuint* program)
+	{
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, *m_texture);
+		Utility::createUniforms<int>("tex", 0, program);
+	}
+
+private:
+	GLuint* m_texture = new GLuint();
+	float m_maxScale, m_minScale;
+	float m_modify;
 };
 
 #endif   // __SCENE_OBJECTS_H__

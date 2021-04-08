@@ -63,6 +63,38 @@ Object::Object(ObjectType type)
 		m_texCoords = m_texCoordsWalk;
 		break;
 	}
+	case ObjectType::SPIRAL:
+	{
+		m_program = &m_programSpiral;
+
+		initializeSpiral();
+		m_mesh = m_meshSpiral;
+		m_shapeType = m_shapeSpiral;
+
+		// set positional data for camera
+		m_pos = &m_posSpiral;
+		m_rot = &m_rotationSpiral;
+		m_scale = &m_scaleSpiral;
+
+		m_texCoords = m_texCoordsSpiral;
+		break;
+	}
+	case ObjectType::DUCK:
+	{
+		m_program = &m_programDuck;
+
+		initializeDuck();
+		m_mesh = m_meshDuck;
+		m_shapeType = m_shapeDuck;
+
+		// set positional data for camera
+		m_pos = &m_posDuck;
+		m_rot = &m_rotationDuck;
+		m_scale = &m_scaleDuck;
+
+		m_texCoords = m_texCoordsDuck;
+		break;
+	}
 	default:
 	{
 		m_program = new GLuint();
@@ -100,6 +132,8 @@ Object::render()
 	case ObjectType::KANYE: { passUniformDataKanye(m_program); break; }
 	case ObjectType::VENERGY: { passUniformDataV(m_program); break; }
 	case ObjectType::WALK: { passUniformDataWalk(m_program); break; }
+	case ObjectType::SPIRAL: { passUniformDataSpiral(m_program); break; }
+	case ObjectType::DUCK: { passUniformDataDuck(m_program); break; }
 	default: 
 		break;
 	}
@@ -117,6 +151,8 @@ Object::update()
 	case ObjectType::KANYE: {Kanye::update(); break; }
 	case ObjectType::VENERGY: {VEnergy::update(); break; }
 	case ObjectType::WALK: {Walk::update(); break; }
+	case ObjectType::SPIRAL: {Spiral::update(); break; }
+	case ObjectType::DUCK: {Duck::update(); break; }
 	default: break;
 	}
 
