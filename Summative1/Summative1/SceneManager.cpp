@@ -29,7 +29,7 @@ SceneManager::initialize()
 	m_sceneObjects.push_back(new Object(ObjectType::VENERGY));
 	m_sceneObjects.push_back(new Object(ObjectType::WALK));
 	m_sceneObjects.push_back(new Object(ObjectType::SPIRAL));
-	//m_sceneObjects.push_back(new Object(ObjectType::DUCK));
+	m_sceneObjects.push_back(new Object(ObjectType::DUCK));
 }
 
 // renders all objects in the scene objects vector

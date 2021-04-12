@@ -272,8 +272,8 @@ protected:
 	void initializeSpiral()
 	{
 		//set up texture coords and create mesh
-		m_texCoordsSpiral = { glm::vec4(0.0f, 0.85f, 0.5f, 1.0f), glm::vec4(-1.0f, -0.85f, 0.125f, 0.0f), 
-			glm::vec4(1.0f, -0.85f, 1.0f, 0.875f) };
+		m_texCoordsSpiral = { glm::vec4(0.0f, 0.934f, 0.5f, 1.0f), glm::vec4(-1.0f, -0.934f, 0.125f, 0.0f), 
+			glm::vec4(1.0f, -0.934f, 1.0f, 0.875f) };
 		MeshManager::editMesh(Shape::TRIANGLE, m_texCoordsSpiral);
 		m_meshSpiral = MeshManager::createMesh(Shape::TRIANGLE);
 
@@ -326,7 +326,7 @@ protected:
 		m_meshDuck = MeshManager::createMesh(Shape::TRIANGLE);
 
 		// set up texture
-		m_texture = Texture::createTexture("Resources/Textures/Duck.jpg");
+		m_texture = Texture::createTexture("Resources/Textures/Duck.png");
 	}
 
 	// set up program and mesh data

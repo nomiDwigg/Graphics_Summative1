@@ -33,6 +33,8 @@ Texture::createTexture(std::string filepath)
 			std::cout << "error creating texture: " << filepath << "  :  " << stbi_failure_reason() << std::endl;
 		}
 
+		//std::cout << stbi_failure_reason() << std::endl;
+
 		// create and bind a new texture
 		GLuint* texture = new GLuint();
 		glGenTextures(1, texture);
